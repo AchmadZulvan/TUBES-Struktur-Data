@@ -10,7 +10,6 @@ struct Nilai {
     float nilai;
     Nilai* next;
 };
-
 struct Mahasiswa {
     string nim;
     string nama;
@@ -39,4 +38,5 @@ void tampilPesertaMatkul(const Mahasiswa* head, const string& matkul);
 bool cekLulus(float nilai);
 
 #endif
+
 
