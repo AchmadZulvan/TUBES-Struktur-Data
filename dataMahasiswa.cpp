@@ -2,11 +2,12 @@
 #include <iostream>
 using namespace std;
 
+// Init
 void init(Mahasiswa*& head) {
     head = nullptr;
 }
 
-// Cari 
+// Cari Mahasiswa
 Mahasiswa* cariMahasiswa(Mahasiswa* head, const string& nim) {
     while (head) {
         if (head->nim == nim) return head;
@@ -53,6 +54,7 @@ void inputNilai(Mahasiswa* mhs) {
     }
     cin.ignore();
 
+    // Cegah duplikasi matkul
     Nilai* temp = mhs->firstNilai;
     while (temp) {
         if (temp->matkul == n->matkul) {
@@ -65,6 +67,42 @@ void inputNilai(Mahasiswa* mhs) {
 
     n->next = mhs->firstNilai;
     mhs->firstNilai = n;
+}
+
+// Update Nilai
+void updateNilai(Mahasiswa* mhs) {
+    if (!mhs) {
+        cout << "Mahasiswa tidak ditemukan!\n";
+        return;
+    }
+
+    string matkul;
+    cout << "Mata kuliah yang diupdate: ";
+    getline(cin, matkul);
+
+    Nilai* n = mhs->firstNilai;
+    while (n && n->matkul != matkul) {
+        n = n->next;
+    }
+
+    if (!n) {
+        cout << "Mata kuliah tidak ditemukan!\n";
+        return;
+    }
+
+    cout << "Nilai lama: " << n->nilai << endl;
+    cout << "Nilai baru: ";
+    cin >> n->nilai;
+
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Input nilai tidak valid!\n";
+        return;
+    }
+    cin.ignore();
+
+    cout << "Nilai berhasil diperbarui.\n";
 }
 
 // Tampil Nilai
@@ -84,13 +122,13 @@ void tampilNilaiMahasiswa(const Mahasiswa* mhs) {
 
     Nilai* n = mhs->firstNilai;
     while (n) {
-        cout << "  " << n->matkul << " : " << n->nilai;
-        cout << (cekLulus(n->nilai) ? " (Lulus)" : " (Tidak Lulus)") << endl;
+        cout << "  " << n->matkul << " : " << n->nilai
+             << (cekLulus(n->nilai) ? " (Lulus)" : " (Tidak Lulus)") << endl;
         n = n->next;
     }
 }
 
-// Peserta Mata Kuliah
+// Perserta Mata Kuliah
 void tampilPesertaMatkul(const Mahasiswa* head, const string& matkul) {
     bool found = false;
     while (head) {
@@ -108,7 +146,7 @@ void tampilPesertaMatkul(const Mahasiswa* head, const string& matkul) {
     if (!found) cout << "Tidak ada peserta.\n";
 }
 
-// Hapus Mahasiswa
+// hapus Mahasiswa
 void hapusMahasiswa(Mahasiswa*& head, const string& nim) {
     Mahasiswa *curr = head, *prev = nullptr;
 
