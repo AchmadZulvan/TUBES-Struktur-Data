@@ -3,8 +3,8 @@
 
 #include <string>
 using namespace std;
-//Struct
 
+//Struct
 struct Nilai {
     string matkul;
     float nilai;
@@ -39,3 +39,4 @@ void tampilPesertaMatkul(const Mahasiswa* head, const string& matkul);
 bool cekLulus(float nilai);
 
 #endif
+
